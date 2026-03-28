@@ -100,6 +100,22 @@ curl -X POST http://localhost:3000/search-formula \
   -d '{"mode": "TOKENIZED", "search_formula": "$\\sum_{i=1}^n x_i$"}'
 ```
 
+
+
+### 3.1 Busca Personalizada
+
+```
+
+./requests/run.sh <MODE> '<FORMULA>'
+
+Examples:
+
+./requests/run.sh DIRECT '! \colon \mathrm{Singletons} → \mathrm{Set}'
+
+./requests/run.sh TOKENIZED '! \colon \mathrm{Singletons} → \mathrm{Set}'
+```
+
+
 Retorna as 3 formulas mais similares com score de similaridade:
 
 ```json
