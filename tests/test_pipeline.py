@@ -149,3 +149,99 @@ def test_main_multiple_batches(mock_post, capsys):
         assert "Pipeline complete." in captured.out
     finally:
         os.unlink(tmp_path)
+
+
+@patch("pipeline.requests.post")
+def test_main_continues_on_formula_failure(mock_post, capsys, tmp_path):
+    """If one formula fails, the pipeline skips it and continues."""
+    call_count = [0]
+
+    def _mock_with_failure(url, **kwargs):
+        resp = MagicMock()
+        resp.raise_for_status = MagicMock()
+
+        if "/embed" in url:
+            call_count[0] += 1
+            # Fail on the 1st embed call (formula 0 direct path)
+            if call_count[0] == 1:
+                resp.raise_for_status.side_effect = Exception("connection timeout")
+                return resp
+            resp.json.return_value = {"embedding": FAKE_EMBEDDING}
+        elif "/aggregate/json" in url:
+            resp.json.return_value = {"token_average_embedding": FAKE_AVG_EMBEDDING}
+        elif "/api/formulas/process" in url:
+            resp.json.return_value = {"tokens": FAKE_TOKENS}
+        elif "/_bulk" in url:
+            resp.json.return_value = {"errors": False, "items": [{"index": {"status": 201}}]}
+        return resp
+
+    mock_post.side_effect = _mock_with_failure
+
+    input_file = tmp_path / "formulas.txt"
+    input_file.write_text("bad_formula\ngood_formula\n")
+
+    failed_file = os.path.join(os.getcwd(), pipeline.FAILED_FILE)
+    try:
+        pipeline.main(str(input_file), batch_size=10)
+        captured = capsys.readouterr()
+        assert "1 succeeded, 1 failed" in captured.out
+        assert os.path.exists(failed_file)
+        with open(failed_file) as f:
+            content = f.read()
+        assert "bad_formula" in content
+    finally:
+        if os.path.exists(failed_file):
+            os.unlink(failed_file)
+
+
+@patch("pipeline.requests.post")
+def test_main_saves_unsent_batch_on_elastic_failure(mock_post, capsys, tmp_path):
+    """If Elasticsearch is down, the batch is saved to disk."""
+
+    def _mock_elastic_down(url, **kwargs):
+        resp = MagicMock()
+        resp.raise_for_status = MagicMock()
+
+        if "/embed" in url:
+            resp.json.return_value = {"embedding": FAKE_EMBEDDING}
+        elif "/aggregate/json" in url:
+            resp.json.return_value = {"token_average_embedding": FAKE_AVG_EMBEDDING}
+        elif "/api/formulas/process" in url:
+            resp.json.return_value = {"tokens": FAKE_TOKENS}
+        elif "/_bulk" in url:
+            raise ConnectionError("Elasticsearch is down")
+        return resp
+
+    mock_post.side_effect = _mock_elastic_down
+
+    input_file = tmp_path / "formulas.txt"
+    input_file.write_text("x^2\n")
+
+    unsent_dir = os.path.join(os.getcwd(), pipeline.UNSENT_DIR)
+    try:
+        pipeline.main(str(input_file), batch_size=10)
+        captured = capsys.readouterr()
+        assert "1 succeeded, 0 failed" in captured.out
+        assert "[SAVED]" in captured.out
+        assert os.path.isdir(unsent_dir)
+    finally:
+        import shutil
+        if os.path.isdir(unsent_dir):
+            shutil.rmtree(unsent_dir)
+
+
+@patch("pipeline.requests.post", side_effect=_mock_post)
+def test_main_start_from(mock_post, capsys):
+    """--start-from skips formulas before the given index."""
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".txt", delete=False) as f:
+        for i in range(5):
+            f.write(f"formula_{i}\n")
+        tmp_path = f.name
+
+    try:
+        pipeline.main(tmp_path, batch_size=100, start_from=3)
+        captured = capsys.readouterr()
+        assert "Processing 2 formula(s)" in captured.out
+        assert "2 succeeded, 0 failed" in captured.out
+    finally:
+        os.unlink(tmp_path)

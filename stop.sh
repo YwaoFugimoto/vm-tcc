@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 
@@ -17,6 +16,10 @@ done
 
 # --- Stop Elasticsearch + Kibana ---
 echo "Stopping Elasticsearch + Kibana..."
-docker compose -f "$ROOT/docker/docker-compose.yml" --env-file "$ROOT/docker/.env" down
+docker compose -f "$ROOT/docker/docker-compose.yml" --env-file "$ROOT/docker/.env" down 2>/dev/null || echo "  Docker containers not running"
 
-echo "All services stopped."
+# --- Clean logs ---
+echo "Cleaning logs..."
+rm -f "$ROOT/logs/"*.log
+
+echo "All services stopped. Run 'bash start.sh' to restart."
