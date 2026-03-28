@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+logs/
+requests/outputs/
+
+docker/.env
+
+.mypy_cache/
+.idea/

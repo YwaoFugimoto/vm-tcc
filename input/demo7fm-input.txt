@@ -1,0 +1,13 @@
+$\begin{align*} R&=Sym(V^*(-2)), & R^{\vee}&=Sym(V\langle 2\rangle). \\ \Lambda&=Sym(V^*(-2)[1]), & \Lambda^{\vee}&=Sym(V^*\langle-2\rangle[1]). \end{align*}$
+
+$E(K)_{\mathrm{tors}} \cong \begin{cases} \mathbb{Z}/m\mathbb{Z} & \text{for} 1\leq m\leq 18, m\neq 17 \\ \mathbb{Z}/2\mathbb{Z} \oplus\mathbb{Z}/2m\mathbb{Z} & \text{for}\,\, 1\leq m\leq 6 \\ \mathbb{Z}/3\mathbb{Z} \oplus\mathbb{Z}/3m\mathbb{Z} & \text{for}\,\, 1\leq m\leq 2 \\ \mathbb{Z}/4\mathbb{Z}\oplus\mathbb{Z}/4\mathbb{Z} \end{cases}$
+
+!^\ast: \Map(1, \mathcal{M} (X,Y)) = \mathcal{M} (X,Y) \overset{(!\otimes\id_X)^\ast}{\longrightarrow} \mathcal{M} (S^1\otimes X,Y) = \Map(S^1, \mathcal{M} (X,Y))
+
+! \colon \mathrm{Singletons} → \mathrm{Set}
+
+(K-\lambda I)^{-1} = \left( \begin{array}{ccc} (A-\lambda I)^{-1} & 0 \\ \ -(C-\lambda I)^{-1}B(A-\lambda I)^{-1} & (C-\lambda I)^{-1} \\ \end{array} \right)
+
+(K/m)^\ast(BG) \to \prod_F (K/m)^\ast(BF)
+
+(K\odot X) = ((K_0 \cdot X_a) \cup_{(K_0 \cdot X_b)} (\pi_0 K \cdot X_b) \leftarrow (\pi_0 K \cdot X_b))

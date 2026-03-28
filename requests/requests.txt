@@ -1,0 +1,22 @@
+# Busca direta
+curl -X POST http://localhost:3000/search-formula \
+  -H "Content-Type: application/json" \
+  -d '{"mode": "DIRECT", "search_formula": "(K\\odot X) = ((K_0 \\cdot X_a) \\cup_{(K_0 \\cdot X_b)} (\\pi_0 K \\cdot X_b) \\leftarrow (\\pi_0 K \\cdot X_b))"}'
+
+# Busca tokenizada
+curl -X POST http://localhost:3000/search-formula \
+  -H "Content-Type: application/json" \
+  -d '{"mode": "TOKENIZED", "search_formula": "(K\\odot X) = ((K_0 \\cdot X_a) \\cup_{(K_0 \\cdot X_b)} (\\pi_0 K \\cdot X_b) \\leftarrow (\\pi_0 K \\cdot X_b))"}'
+
+
+# Busca direta
+curl -X POST http://localhost:3000/search-formula \
+  -H "Content-Type: application/json" \
+  -d '{"mode": "DIRECT", "search_formula": "(K\odot X) = ((K_0 \cdot X_a) \cup_{(K_0 \cdot X_b)} (\pi_0 K \cdot X_b) \leftarrow (\pi_0 K \cdot X_b))"}'
+
+# Busca tokenizada
+curl -X POST http://localhost:3000/search-formula \
+  -H "Content-Type: application/json" \
+  -d '{"mode": "TOKENIZED", "search_formula": "(K\odot X) = ((K_0 \cdot X_a) \cup_{(K_0 \cdot X_b)} (\pi_0 K \cdot X_b) \leftarrow (\pi_0 K \cdot X_b))"}'
+
+
