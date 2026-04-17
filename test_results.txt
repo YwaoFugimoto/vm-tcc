@@ -1,0 +1,164 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.0.3, pluggy-1.6.0 -- /home/flavio/vm-tcc/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/flavio/vm-tcc
+collecting ... collected 54 items
+
+tests/test_execution.py::TestResponseStructure::test_response_is_list_of_score_formula_dicts PASSED
+tests/test_execution.py::TestResponseStructure::test_returns_up_to_30_results PASSED
+tests/test_execution.py::TestResponseStructure::test_scores_between_zero_and_one PASSED
+tests/test_execution.py::TestExactMatch::test_exact_match_direct_simple PASSED
+tests/test_execution.py::TestExactMatch::test_exact_match_tokenized_simple PASSED
+tests/test_execution.py::TestExactMatch::test_exact_match_medium_formula PASSED
+tests/test_execution.py::TestBothModes::test_both_modes_simple_formula PASSED
+tests/test_execution.py::TestBothModes::test_both_modes_complex_formula PASSED
+tests/test_execution.py::TestSemanticRelevance::test_similar_formula_returns_related PASSED
+tests/test_execution.py::TestSemanticRelevance::test_variation_of_indexed_formula PASSED
+tests/test_execution.py::TestSemanticRelevance::test_subexpression_match PASSED
+tests/test_execution.py::TestComplexityRanges::test_very_short_formula PASSED
+tests/test_execution.py::TestComplexityRanges::test_short_with_commands PASSED
+tests/test_execution.py::TestComplexityRanges::test_long_complex_formula PASSED
+tests/test_execution.py::TestSpecialNotation::test_unicode_arrow PASSED
+tests/test_execution.py::TestSpecialNotation::test_mathbb PASSED
+tests/test_execution.py::TestSpecialNotation::test_mathcal PASSED
+tests/test_execution.py::TestSpecialNotation::test_overset_longrightarrow PASSED
+tests/test_execution.py::TestEdgeCases::test_empty_formula PASSED
+tests/test_execution.py::TestEdgeCases::test_invalid_mode PASSED
+tests/test_execution.py::TestEdgeCases::test_backslash_heavy_formula PASSED
+tests/test_execution.py::TestScoreOrdering::test_results_sorted_by_descending_score PASSED
+tests/test_execution.py::TestModeComparison::test_both_modes_return_results[simple] PASSED
+tests/test_execution.py::TestModeComparison::test_both_modes_return_results[medium] PASSED
+tests/test_execution.py::TestModeComparison::test_both_modes_return_results[complex] PASSED
+tests/test_execution.py::TestModeComparison::test_both_modes_return_results[exact_indexed] PASSED
+tests/test_execution.py::TestModeComparison::test_both_modes_return_results[mathbb] PASSED
+tests/test_execution.py::TestModeComparison::test_both_modes_return_results[polynomial] PASSED
+tests/test_execution.py::TestModeComparison::test_both_modes_return_results[lambda] PASSED
+tests/test_execution.py::TestModeComparison::test_both_modes_return_results[mapping] PASSED
+tests/test_execution.py::TestModeComparison::test_top_result_comparison[simple] 
+  [simple]
+    DIRECT    top: 1.0000 | ! \colon A \to 1
+    TOKENIZED top: 1.0000 | ! \colon A \to 1
+    Winner: DIRECT | Same #1: True
+PASSED
+tests/test_execution.py::TestModeComparison::test_top_result_comparison[medium] 
+  [medium]
+    DIRECT    top: 1.0000 | (K/m)^\ast(BG) \to \prod_F (K/m)^\ast(BF)
+    TOKENIZED top: 1.0000 | (K/m)^\ast(BG) \to \prod_F (K/m)^\ast(BF)
+    Winner: DIRECT | Same #1: True
+PASSED
+tests/test_execution.py::TestModeComparison::test_top_result_comparison[complex] 
+  [complex]
+    DIRECT    top: 1.0000 | (K\odot X) = ((K_0 \cdot X_a) \cup_{(K_0 \cdot X_b)} (\pi_0 K \cdot X_b) \leftar
+    TOKENIZED top: 1.0000 | (K\odot X) = ((K_0 \cdot X_a) \cup_{(K_0 \cdot X_b)} (\pi_0 K \cdot X_b) \leftar
+    Winner: TOKENIZED | Same #1: True
+PASSED
+tests/test_execution.py::TestModeComparison::test_top_result_comparison[exact_indexed] 
+  [exact_indexed]
+    DIRECT    top: 1.0000 | ! \colon \mathrm{Singletons} → \mathrm{Set}
+    TOKENIZED top: 1.0000 | ! \colon \mathrm{Singletons} → \mathrm{Set}
+    Winner: DIRECT | Same #1: True
+PASSED
+tests/test_execution.py::TestModeComparison::test_top_result_comparison[mathbb] 
+  [mathbb]
+    DIRECT    top: 1.0000 | \mathbb{Z}/M\mathbb{Z}
+    TOKENIZED top: 1.0000 | \mathbb{Z}/ m\mathbb{Z}
+    Winner: DIRECT | Same #1: False
+PASSED
+tests/test_execution.py::TestModeComparison::test_top_result_comparison[polynomial] 
+  [polynomial]
+    DIRECT    top: 1.0000 | (-1)^n x^n
+    TOKENIZED top: 1.0000 | (-1)^n x^n
+    Winner: TOKENIZED | Same #1: True
+PASSED
+tests/test_execution.py::TestModeComparison::test_top_result_comparison[lambda] 
+  [lambda]
+    DIRECT    top: 0.9303 | (A - \lambda I)^{-k}
+    TOKENIZED top: 0.9993 | (K-\lambda I)^{-1} = \left( \begin{array}{ccc} (A-\lambda I)^{-1} & 0 \\ \ -(C-\
+    Winner: TOKENIZED | Same #1: False
+PASSED
+tests/test_execution.py::TestModeComparison::test_top_result_comparison[mapping] 
+  [mapping]
+    DIRECT    top: 1.0000 | !^\ast: \Map(1, \mathcal{M} (X,Y)) = \mathcal{M} (X,Y) \overset{(!\otimes\id_X)^
+    TOKENIZED top: 1.0000 | !^\ast: \Map(1, \mathcal{M} (X,Y)) = \mathcal{M} (X,Y) \overset{(!\otimes\id_X)^
+    Winner: TOKENIZED | Same #1: True
+PASSED
+tests/test_execution.py::TestModeComparison::test_top10_overlap[simple] 
+  [simple] Top-10 overlap: 1 formula(s)
+    shared: ! \colon A \to 1
+PASSED
+tests/test_execution.py::TestModeComparison::test_top10_overlap[medium] 
+  [medium] Top-10 overlap: 2 formula(s)
+    shared: (K/m)^\ast(BG) \to \prod_F (K/m)^\ast(BF)
+    shared: K^\ast(BG) \to \prod_F K^\ast(BF)
+PASSED
+tests/test_execution.py::TestModeComparison::test_top10_overlap[complex] 
+  [complex] Top-10 overlap: 1 formula(s)
+    shared: (K\odot X) = ((K_0 \cdot X_a) \cup_{(K_0 \cdot X_b)} (\pi_0 K \cdot X_b) \leftar
+PASSED
+tests/test_execution.py::TestModeComparison::test_top10_overlap[exact_indexed] 
+  [exact_indexed] Top-10 overlap: 1 formula(s)
+    shared: ! \colon \mathrm{Singletons} → \mathrm{Set}
+PASSED
+tests/test_execution.py::TestModeComparison::test_top10_overlap[mathbb] 
+  [mathbb] Top-10 overlap: 5 formula(s)
+    shared: \mathbb{Z}/m
+    shared: \mathbb{Z}/m \mathbb{Z}
+    shared: \mathbb{Z}/m\mathbb{Z}
+PASSED
+tests/test_execution.py::TestModeComparison::test_top10_overlap[polynomial] 
+  [polynomial] Top-10 overlap: 1 formula(s)
+    shared: (-1)^n x^n
+PASSED
+tests/test_execution.py::TestModeComparison::test_top10_overlap[lambda] 
+  [lambda] Top-10 overlap: 3 formula(s)
+    shared: (A - \lambda I)^{-1}
+    shared: (\lambda I-A)^{-1}
+    shared: (A-\lambda I)^{-1}
+PASSED
+tests/test_execution.py::TestModeComparison::test_top10_overlap[mapping] 
+  [mapping] Top-10 overlap: 2 formula(s)
+    shared: i^\ast:\Map(S^1, \mathcal{M} (X,Y)) \longrightarrow \Map(1, \mathcal{M} (X,Y)) =
+    shared: !^\ast: \Map(1, \mathcal{M} (X,Y)) = \mathcal{M} (X,Y) \overset{(!\otimes\id_X)^
+PASSED
+tests/test_execution.py::TestModeComparison::test_score_distribution[simple] 
+  [simple]
+    DIRECT    — count: 10, top: 1.0000, avg: 0.9007, min: 0.8826
+    TOKENIZED — count: 10, top: 1.0000, avg: 0.9976, min: 0.9968
+PASSED
+tests/test_execution.py::TestModeComparison::test_score_distribution[medium] 
+  [medium]
+    DIRECT    — count: 10, top: 1.0000, avg: 0.8673, min: 0.8283
+    TOKENIZED — count: 10, top: 1.0000, avg: 0.9979, min: 0.9974
+PASSED
+tests/test_execution.py::TestModeComparison::test_score_distribution[complex] 
+  [complex]
+    DIRECT    — count: 10, top: 1.0000, avg: 0.8408, min: 0.8122
+    TOKENIZED — count: 10, top: 1.0000, avg: 0.9988, min: 0.9985
+PASSED
+tests/test_execution.py::TestModeComparison::test_score_distribution[exact_indexed] 
+  [exact_indexed]
+    DIRECT    — count: 10, top: 1.0000, avg: 0.8435, min: 0.8115
+    TOKENIZED — count: 10, top: 1.0000, avg: 0.9666, min: 0.9629
+PASSED
+tests/test_execution.py::TestModeComparison::test_score_distribution[mathbb] 
+  [mathbb]
+    DIRECT    — count: 10, top: 1.0000, avg: 0.9864, min: 0.9525
+    TOKENIZED — count: 10, top: 1.0000, avg: 0.9988, min: 0.9976
+PASSED
+tests/test_execution.py::TestModeComparison::test_score_distribution[polynomial] 
+  [polynomial]
+    DIRECT    — count: 10, top: 1.0000, avg: 0.9193, min: 0.9033
+    TOKENIZED — count: 10, top: 1.0000, avg: 0.9994, min: 0.9992
+PASSED
+tests/test_execution.py::TestModeComparison::test_score_distribution[lambda] 
+  [lambda]
+    DIRECT    — count: 10, top: 0.9303, avg: 0.9144, min: 0.8998
+    TOKENIZED — count: 10, top: 0.9993, avg: 0.9992, min: 0.9990
+PASSED
+tests/test_execution.py::TestModeComparison::test_score_distribution[mapping] 
+  [mapping]
+    DIRECT    — count: 10, top: 1.0000, avg: 0.8576, min: 0.8318
+    TOKENIZED — count: 10, top: 1.0000, avg: 0.9987, min: 0.9984
+PASSED
+
+======================== 54 passed in 92.16s (0:01:32) =========================
